@@ -3,18 +3,19 @@ namespace TryPDFFile;
 public class TableOfContentsNode
 {
     public int FontSize { get; set; }
-    public string Text { get; set; }
     public int VerticalPosition { get; set; }
     public int PageNumber { get; set; }
+
+    public int AbsolutePosition { get; set; }
     public List<TableOfContentsNode> Children { get; set; }
     public int Depth { get; set; } // Добавляем уровень узла.
 
-    public TableOfContentsNode(int fontSize, string text, int verticalPosition, int pageNumber, int depth = 0)
+    public TableOfContentsNode(int fontSize, int verticalPosition, int pageNumber, int absolutePosition, int depth = 0)
     {
         FontSize = fontSize;
-        Text = text;
         VerticalPosition = verticalPosition;
         PageNumber = pageNumber;
+        AbsolutePosition = absolutePosition;
         Children = new List<TableOfContentsNode>();
         Depth = depth; // Устанавливаем уровень узла.
     }

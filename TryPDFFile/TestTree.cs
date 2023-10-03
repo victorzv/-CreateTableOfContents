@@ -4,56 +4,48 @@ public class TestTree
 {
     static void Main(string[] args)
     { 
-        var listOfTexts = new List<(int FontSize, string Text, int VerticalPosition, int PageNumber)>
+      
+        var listOfTexts = new List<(int FontSize, int VerticalPosition, int PageNumber, int absolutePosition)>
         {
-            (10, "text 10", 750, 1),
-            (27, "text 27 1", 755, 1),
-            (16, "text 16 1", 700, 1),
-            (10, "text 10", 655, 1),
-            (27, "text 27 2", 751, 2),
-            (10, "text 10", 750, 2),
-            (10, "text 10", 655, 2),
-            (16, "text 16", 720, 2),
-            (16, "text 16", 700, 2),
-            (14, "text 14", 715, 2),
-            (10, "text 10", 650, 2),
-            (14, "text 10", 750, 3),
-            (27, "text 27 1", 755, 3),
-            (16, "text 16 1", 700, 3),
-            (12, "text 12", 655, 3),
-            (10, "text 10", 650, 3),
-            (27, "text 27 2", 755, 2),
-            (10, "text 10", 750, 3),
-            (10, "text 10", 655, 3),
-            (16, "text 16", 720, 3),
-            (16, "text 16", 700, 3),
-            (10, "text 10", 715, 3),
-            (10, "text 10", 650, 4)
-        };
 
+};
+
+        var distinctFontSizes = listOfTexts.Select(element => element.FontSize).Distinct().ToList();
+
+        var fontSizeLevels = distinctFontSizes
+            .OrderByDescending(fontSize => fontSize) // Сортируем размеры шрифтов по убыванию.
+            .Select((fontSize, index) => new { FontSize = fontSize, Level = index + 1 })
+            .ToDictionary(item => item.FontSize, item => item.Level);
+
+        
+        int maxVerticalPosition = listOfTexts.Max(element => element.VerticalPosition);
+        
+        listOfTexts.ForEach(text => text.absolutePosition = text.PageNumber * maxVerticalPosition + text.VerticalPosition);
+        
         // Сортировка списка по размеру шрифта
-        var sortedList = listOfTexts.OrderByDescending(item => item.FontSize)
-            .ThenBy(item => item.PageNumber)
-            .ThenByDescending(item => item.VerticalPosition)
+        var sortedList = listOfTexts
+            .OrderByDescending(item => item.FontSize)
+            /*.ThenBy(item => item.PageNumber)
+            .ThenByDescending(item => item.VerticalPosition)*/
             .ToList();
-
+            
         foreach (var val in sortedList)
         {
-            Console.WriteLine($"FS = {val.FontSize} Text = {val.Text} Page = {val.PageNumber} PagePosition = {val.VerticalPosition}");
+            Console.WriteLine($"FS = {val.FontSize} Page = {val.PageNumber} PagePosition = {val.VerticalPosition}");
         }
       
        // Создаем корневой узел с очень большим шрифтом.
-        var tocRoot = new TableOfContentsNode(int.MaxValue, "Root", 0, 0);
+        var tocRoot = new TableOfContentsNode(int.MaxValue,  0, 0, 0);
 
-        foreach (var (fontSize, text, verticalPosition, pageNumber) in sortedList)
+        foreach (var (fontSize, verticalPosition, pageNumber, absolutePosition) in sortedList)
         {
             // Находим узел, к которому нужно добавить текущий фрагмент в оглавление.
-            var parentNode = FindParentNode(tocRoot, fontSize, verticalPosition, pageNumber);
+            var parentNode = FindParentNode(tocRoot, fontSize, verticalPosition, pageNumber, absolutePosition);
             
             //Console.WriteLine($"FS = {fontSize} Page = {pageNumber} PagePosition = {verticalPosition} Parent is {parentNode.PageNumber} {parentNode.FontSize} {parentNode.VerticalPosition}");
 
             // Создаем новый узел для текущего фрагмента.
-            var newNode = new TableOfContentsNode(fontSize, text, verticalPosition, pageNumber);
+            var newNode = new TableOfContentsNode(fontSize, verticalPosition, pageNumber, absolutePosition);
 
             // Добавляем текущий узел к родительскому узлу.
             parentNode.AddChild(newNode);
@@ -67,28 +59,21 @@ public class TestTree
     }
 
     // Метод для поиска родительского узла для текущего элемента в оглавлении.
-    private static TableOfContentsNode FindParentNode(TableOfContentsNode currentNode, int fontSize, int verticalPosition, int pageNumber)
+    private static TableOfContentsNode FindParentNode(TableOfContentsNode currentNode, int fontSize, int verticalPosition, int pageNumber, int absolutePosition)
     {
-        var sortedChildren = currentNode.Children.OrderBy(child => child.VerticalPosition);
-        // Сначала проверяем детей текущего узла.
+        // получаем детей от текущего узла
+        var sortedChildren = currentNode.Children.OrderBy(child => child.PageNumber);
+        
         foreach (var child in sortedChildren)
         {
-            // Проверяем, соответствует ли дочерний узел условиям.
             if (child.FontSize > fontSize)
             {
-                // Если размер шрифта у дочернего узла больше, проверяем страницу.
-                if (child.PageNumber == pageNumber)
-                {
-                    // Если страница совпадает, проверяем положение на странице.
-                    if (child.VerticalPosition > verticalPosition)
-                    {
-                        // Если положение на странице удовлетворяет условию, рекурсивно идем глубже.
-                        return FindParentNode(child, fontSize, verticalPosition, pageNumber);
-                    }
-                }
+                return FindParentNode(child, fontSize, verticalPosition, pageNumber, absolutePosition);    
             }
         }
-        // Если не нашли подходящего дочернего узла, возвращаем текущий узел как родительский.
+
+        
+        
         return currentNode;        
     }
 
