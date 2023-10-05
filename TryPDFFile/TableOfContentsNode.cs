@@ -6,17 +6,19 @@ public class TableOfContentsNode
     public double VerticalPosition { get; set; }
     public int PageNumber { get; set; }
 
+    public string Text { get; set; }
     public double AbsolutePosition { get; set; }
     public List<TableOfContentsNode> Children { get; set; }
     public int Depth { get; set; } // Добавляем уровень узла.
 
-    public TableOfContentsNode(double fontSize, double verticalPosition, int pageNumber, double absolutePosition, int depth = 0)
+    public TableOfContentsNode(double fontSize, double verticalPosition, int pageNumber, double absolutePosition, string text, int depth = 0)
     {
         FontSize = fontSize;
         VerticalPosition = verticalPosition;
         PageNumber = pageNumber;
         AbsolutePosition = absolutePosition;
         Children = new List<TableOfContentsNode>();
+        Text = text;
         Depth = depth; // Устанавливаем уровень узла.
     }
 

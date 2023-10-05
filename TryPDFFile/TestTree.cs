@@ -4,7 +4,7 @@ namespace TryPDFFile;
 
 public class TestTree
 {
-    static void Main(string[] args)
+    static void NotMain(string[] args)
     {
 
         var listOfTexts = new List<(int FontSize, int PageNumber, int VerticalPosition, int AbsolutePosition)>
@@ -74,7 +74,7 @@ public class TestTree
         listOfTexts = updatedList;
         
         // Создаем фейковый корень с очень большим шрифтом
-        var root = new TableOfContentsNode(int.MaxValue, 1000, -10, -10);
+        var root = new TableOfContentsNode(int.MaxValue, 1000, -10, -10, "");
         root.Depth = 0;
         
         // Группируем данные по размеру шрифта и сортируем
@@ -90,7 +90,7 @@ public class TestTree
         // Добавляем первую группу, как детей в фейковый корень
         foreach (var element in previousElements)
         {
-            var newNode = new TableOfContentsNode(element.FontSize, element.VerticalPosition, element.PageNumber, element.AbsolutePosition);
+            var newNode = new TableOfContentsNode(element.FontSize, element.VerticalPosition, element.PageNumber, element.AbsolutePosition, "");
             root.AddChild(newNode);
         }
         
@@ -116,7 +116,7 @@ public class TestTree
 
                 if (previousNode != null)
                 {
-                    var newNode = new TableOfContentsNode(element.FontSize, element.VerticalPosition, element.PageNumber, element.AbsolutePosition);
+                    var newNode = new TableOfContentsNode(element.FontSize, element.VerticalPosition, element.PageNumber, element.AbsolutePosition, "");
                     previousNode.AddChild(newNode);
                 }
             }

@@ -5,7 +5,7 @@ public class GenNormalContent : IBuilderContent
     public TableOfContentsNode build(List<ItemInfo> list)
     {
         // фэйковый корень
-        TableOfContentsNode root = new TableOfContentsNode(Int32.MaxValue, -10, -10, -10, 0);
+        TableOfContentsNode root = new TableOfContentsNode(Int32.MaxValue, -10, -10, -10, "");
         
         double maxVerticalPosition = list.Max(el => el.VerticalPosition);
         
@@ -22,7 +22,7 @@ public class GenNormalContent : IBuilderContent
         // Добавляем первую группу, как детей в фейковый корень
         foreach (var element in previousElements)
         {
-            var newNode = new TableOfContentsNode(element.FontSize, element.VerticalPosition, element.Page, element.AbsolutePosition);
+            var newNode = new TableOfContentsNode(element.FontSize, element.VerticalPosition, element.Page, element.AbsolutePosition, element.Text);
             root.AddChild(newNode);
         }
 
@@ -47,7 +47,7 @@ public class GenNormalContent : IBuilderContent
                 }
 
                 if (previousNode == null) continue;
-                var newNode = new TableOfContentsNode(element.FontSize, element.VerticalPosition, element.Page, element.AbsolutePosition);
+                var newNode = new TableOfContentsNode(element.FontSize, element.VerticalPosition, element.Page, element.AbsolutePosition, element.Text);
                 previousNode.AddChild(newNode);
             }
 

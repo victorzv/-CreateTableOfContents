@@ -4,7 +4,7 @@ using TryPDFFile;
 
 class Program
 {
-    static void main(string[] args)
+    static void Main(string[] args)
     {
         Document pdfDoc = new Document("/home/tigra/sample.pdf");
 
@@ -45,7 +45,7 @@ class Program
         
         TableOfContentsNode content = normalContent.build(itemsList);
         
-        content.Traverse(el=>Console.WriteLine($"{new string(' ', el.Depth * 4)}FS({el.FontSize}) Page {el.PageNumber} AP {el.AbsolutePosition}"));
+        content.Traverse(el=>Console.WriteLine($"{new string(' ', el.Depth * 4)}FS({el.FontSize}) Page {el.PageNumber} AP {el.AbsolutePosition} Text:\t{el.Text}"));
 
     }
 }
