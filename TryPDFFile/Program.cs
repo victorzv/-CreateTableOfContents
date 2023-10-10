@@ -6,7 +6,8 @@ class Program
 {
     static void Main(string[] args)
     {
-        Document pdfDoc = new Document("/home/tigra/sample.pdf");
+        new License().SetLicense("./test.lic");
+        Document pdfDoc = new Document("./test.pdf");
 
         List<ItemInfo> itemsList = new List<ItemInfo>();
 
