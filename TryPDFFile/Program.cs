@@ -6,47 +6,63 @@ class Program
 {
     static void Main(string[] args)
     {
-        new License().SetLicense("./test.lic");
+        //new License().SetLicense("./test.lic");
         Document pdfDoc = new Document("./test.pdf");
 
         List<ItemInfo> itemsList = new List<ItemInfo>();
+        ParagraphAbsorber absorb = new ParagraphAbsorber();
+        absorb.Visit(pdfDoc);
 
-        foreach (Page page in pdfDoc.Pages)
+        foreach (PageMarkup markup in absorb.PageMarkups)
         {
-            TextFragmentAbsorber textFragmentAbsorber = new TextFragmentAbsorber();
-            TextSearchOptions searchOptions = new TextSearchOptions(true);
-            textFragmentAbsorber.TextSearchOptions = searchOptions;
-
-            page.Accept(textFragmentAbsorber);
-
-            TextFragmentCollection textFragments = textFragmentAbsorber.TextFragments;
-
-            foreach (TextFragment textFragment in textFragments)
+            foreach (MarkupSection section in markup.Sections)
             {
-                Console.WriteLine(textFragment.Page.Number);
-                Console.WriteLine(textFragment.Position.YIndent);
-                Console.WriteLine(textFragment.Text);
-                Console.WriteLine(textFragment.TextState.FontSize);
-                Console.WriteLine("_____________________________");
-                ItemInfo itemInfo = new ItemInfo()
+                foreach (MarkupParagraph paragraph in section.Paragraphs)
                 {
-                    FontName = textFragment.TextState.Font.FontName,
-                    FontSize = textFragment.TextState.FontSize,
-                    Page = page.Number,
-                    Text = textFragment.Text,
-                    VerticalPosition = textFragment.Position.YIndent,
-                    HorisontalPosition = textFragment.Position.XIndent
-                };
+                    foreach (List<TextFragment> line in paragraph.Lines)
+                    {
+                        float maxFont = 0;
+                        int pageNumber = 0;
+                        foreach (TextFragment textFragment in line)
+                        {
+                            if(textFragment.TextState.FontSize > maxFont)
+                            {
+                                maxFont = textFragment.TextState.FontSize;                                
+                            }
 
-                itemsList.Add(itemInfo);
+                            if(textFragment.Page.Number > maxFont)
+                            {
+                                pageNumber = textFragment.Page.Number;                                
+                            }
+
+                        }
+
+                        //Console.WriteLine(pageNumber);
+                        Console.WriteLine(paragraph.Text);
+                        Console.WriteLine(maxFont);
+                        Console.WriteLine("_____________________________");
+                        ItemInfo itemInfo = new ItemInfo()
+                        {
+                            FontSize = maxFont,
+                            Page = pageNumber,
+                            Text = paragraph.Text
+                        };
+
+                        itemsList.Add(itemInfo);
+                    }
+                }
             }
         }
 
         IBuilderContent normalContent = new GenNormalContent();
-        
+
         TableOfContentsNode content = normalContent.build(itemsList);
-        
-        content.Traverse(el=>Console.WriteLine($"{new string(' ', el.Depth * 4)}FS({el.FontSize}) Page {el.PageNumber} AP {el.AbsolutePosition} Text:\t{el.Text}"));
+
+        content.Traverse(el =>
+        {
+            //if (el.Children.Any())
+                Console.WriteLine($"{new string(' ', el.Depth * 4)}FS({el.FontSize}) Page {el.PageNumber} AP {el.AbsolutePosition} Text:\t{el.Text}");
+        });
 
     }
 }
