@@ -1,20 +1,22 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace TryPDFFile;
 
 public class TableOfContentsNode
 {
     public double FontSize { get; set; }
-    public double VerticalPosition { get; set; }
     public int PageNumber { get; set; }
 
     public string Text { get; set; }
-    public double AbsolutePosition { get; set; }
+    public int AbsolutePosition { get; set; }
     public List<TableOfContentsNode> Children { get; set; }
     public int Depth { get; set; } // Добавляем уровень узла.
 
-    public TableOfContentsNode(double fontSize, double verticalPosition, int pageNumber, double absolutePosition, string text, int depth = 0)
+    public TableOfContentsNode(double fontSize, int pageNumber, int absolutePosition, string text, int depth = 0)
     {
         FontSize = fontSize;
-        VerticalPosition = verticalPosition;
         PageNumber = pageNumber;
         AbsolutePosition = absolutePosition;
         Children = new List<TableOfContentsNode>();
@@ -40,7 +42,7 @@ public class TableOfContentsNode
         }
     }
     
-    public TableOfContentsNode FindNode(double absolutePosition)
+    public TableOfContentsNode FindNode(int absolutePosition)
     {
         if (this.AbsolutePosition == absolutePosition)
         {

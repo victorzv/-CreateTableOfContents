@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+
 namespace TryPDFFile;
 
 public class GenNormalContent : IBuilderContent
@@ -5,11 +9,7 @@ public class GenNormalContent : IBuilderContent
     public TableOfContentsNode build(List<ItemInfo> list)
     {
         // фэйковый корень
-        TableOfContentsNode root = new TableOfContentsNode(Int32.MaxValue, -10, -10, -10, "");
-        
-        double maxVerticalPosition = list.Max(el => el.VerticalPosition);
-        
-        list.ForEach(el=>el.AbsolutePosition = el.Page * maxVerticalPosition - el.VerticalPosition);
+        TableOfContentsNode root = new TableOfContentsNode(Int32.MaxValue, -10, -10, "");
         
         var groupedByFontSize = list
             .OrderByDescending(element => element.FontSize)
@@ -22,7 +22,8 @@ public class GenNormalContent : IBuilderContent
         // Добавляем первую группу, как детей в фейковый корень
         foreach (var element in previousElements)
         {
-            var newNode = new TableOfContentsNode(element.FontSize, element.VerticalPosition, element.Page, element.AbsolutePosition, element.Text);
+            //double fontSize, int pageNumber, int absolutePosition, string text, int depth = 0
+            var newNode = new TableOfContentsNode(element.FontSize, element.Page, element.AbsolutePosition, element.Text);
             root.AddChild(newNode);
         }
 
@@ -47,7 +48,7 @@ public class GenNormalContent : IBuilderContent
                 }
 
                 if (previousNode == null) continue;
-                var newNode = new TableOfContentsNode(element.FontSize, element.VerticalPosition, element.Page, element.AbsolutePosition, element.Text);
+                var newNode = new TableOfContentsNode(element.FontSize, element.Page, element.AbsolutePosition, element.Text);
                 previousNode.AddChild(newNode);
             }
 

@@ -1,4 +1,6 @@
-﻿using Aspose.Pdf;
+﻿using System;
+using System.Collections.Generic;
+using Aspose.Pdf;
 using Aspose.Pdf.Text;
 using TryPDFFile;
 
@@ -12,7 +14,7 @@ class Program
         List<ItemInfo> itemsList = new List<ItemInfo>();
         ParagraphAbsorber absorb = new ParagraphAbsorber();
         absorb.Visit(pdfDoc);
-
+        int counter = 1;
         foreach (PageMarkup markup in absorb.PageMarkups)
         {
             foreach (MarkupSection section in markup.Sections)
@@ -30,7 +32,7 @@ class Program
                                 maxFont = textFragment.TextState.FontSize;                                
                             }
 
-                            if(textFragment.Page.Number > maxFont)
+                            if(textFragment.Page.Number > pageNumber)
                             {
                                 pageNumber = textFragment.Page.Number;                                
                             }
@@ -45,7 +47,8 @@ class Program
                         {
                             FontSize = maxFont,
                             Page = pageNumber,
-                            Text = paragraph.Text
+                            Text = paragraph.Text,
+                            AbsolutePosition = counter++
                         };
 
                         itemsList.Add(itemInfo);

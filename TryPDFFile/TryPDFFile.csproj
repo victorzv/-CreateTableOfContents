@@ -11,4 +11,23 @@
       <PackageReference Include="Aspose.PDF" Version="23.9.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <Compile Remove="TestTree.cs" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="test.docx">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="test.pdf">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="test2.pdf">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+      <None Update="TestPDF2.pdf">
+        <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+      </None>
+    </ItemGroup>
+
 </Project>
