@@ -1,6 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using Aspose.Pdf;
+﻿using Aspose.Pdf;
 using Aspose.Pdf.Text;
 using TryPDFFile;
 
@@ -8,8 +6,8 @@ class Program
 {
     static void Main(string[] args)
     {
-        //new License().SetLicense("./test.lic");
-        Document pdfDoc = new Document("./test.pdf");
+        new License().SetLicense("./test.lic");
+        Document pdfDoc = new Document("./test2.pdf");
 
         List<ItemInfo> itemsList = new List<ItemInfo>();
         ParagraphAbsorber absorb = new ParagraphAbsorber();
@@ -29,20 +27,20 @@ class Program
                         {
                             if(textFragment.TextState.FontSize > maxFont)
                             {
-                                maxFont = textFragment.TextState.FontSize;                                
+                                maxFont = textFragment.TextState.FontSize;
                             }
 
                             if(textFragment.Page.Number > pageNumber)
                             {
-                                pageNumber = textFragment.Page.Number;                                
+                                pageNumber = textFragment.Page.Number;
                             }
 
                         }
 
                         //Console.WriteLine(pageNumber);
-                        Console.WriteLine(paragraph.Text);
-                        Console.WriteLine(maxFont);
-                        Console.WriteLine("_____________________________");
+                        //Console.WriteLine(paragraph.Text);
+                        Console.Write((int)Math.Round(maxFont) + " ");
+                        //Console.WriteLine("_____________________________");
                         ItemInfo itemInfo = new ItemInfo()
                         {
                             FontSize = maxFont,
@@ -60,10 +58,10 @@ class Program
         IBuilderContent normalContent = new GenNormalContent();
 
         TableOfContentsNode content = normalContent.build(itemsList);
-
+        Console.WriteLine();
         content.Traverse(el =>
         {
-            //if (el.Children.Any())
+            if (el.Children.Any())
                 Console.WriteLine($"{new string(' ', el.Depth * 4)}FS({el.FontSize}) Page {el.PageNumber} AP {el.AbsolutePosition} Text:\t{el.Text}");
         });
 
