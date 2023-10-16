@@ -9,7 +9,9 @@ class Program
     static void Main(string[] args)
     {
 
-        List<ItemInfo> itemsList = new List<ItemInfo>();
+        IBuildData buildData = new BuilderPDFSimple();
+
+        List<ItemInfo> itemsList = buildData.parseData("./test.pdf");
 
         IBuilderContent normalContent = new GenNormalContent();
 
