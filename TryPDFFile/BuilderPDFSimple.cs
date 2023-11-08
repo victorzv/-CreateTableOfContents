@@ -21,10 +21,10 @@ public class BuilderPDFSimple : IBuildData
             {
                 foreach (MarkupParagraph paragraph in section.Paragraphs)
                 {
+                    float maxFont = 0;
+                    int pageNumber = 0;
                     foreach (List<TextFragment> line in paragraph.Lines)
                     {
-                        float maxFont = 0;
-                        int pageNumber = 0;
                         foreach (TextFragment textFragment in line)
                         {
                             if(textFragment.TextState.FontSize > maxFont)
@@ -38,21 +38,21 @@ public class BuilderPDFSimple : IBuildData
                             }
 
                         }
-
-                        //Console.WriteLine(pageNumber);
-                        Console.WriteLine(paragraph.Text);
-                        Console.WriteLine(maxFont);
-                        Console.WriteLine("_____________________________");
-                        ItemInfo itemInfo = new ItemInfo()
-                        {
-                            FontSize = maxFont,
-                            Page = pageNumber,
-                            Text = paragraph.Text,
-                            AbsolutePosition = counter++
-                        };
-
-                        itemsList.Add(itemInfo);
                     }
+
+                    int len = (paragraph.Text.Length > 10) ? 10 : paragraph.Text.Length;
+                    var text = paragraph.Text;
+                    text = text.Substring(1, len-1);
+                    ItemInfo itemInfo = new ItemInfo()
+                    {
+                        FontSize = maxFont,
+                        Page = pageNumber,
+                        Text = text,
+                        AbsolutePosition = counter++,
+                        Level = 0
+                    };
+
+                    itemsList.Add(itemInfo);
                 }
             }
         }

@@ -10,6 +10,7 @@ class Program
 {
     static void Main(string[] args)
     {
+        new License().SetLicense("/home/tigra/test.lic");
         List<ItemInfo> itemsList = null;
         
         IBuildData buildData = new BuilderPDFSimple();
@@ -73,15 +74,27 @@ class Program
             }
         }
 
+        List<ItemInfo> levelList = LevelSetup.SetupLevel(itemsList);
+
+        foreach(var item in levelList)
+        {
+            Console.WriteLine($"{new string(' ', item.Level * 4)} FS({item.FontSize}) Page ({item.Page}) Text: {item.Text} AP {item.AbsolutePosition}");
+        }
+
+        /*
         IBuilderContent normalContent = new GenNormalContent();
 
-        TableOfContentsNode content = normalContent.build(itemsList);
+
+          TableOfContentsNode content = normalContent.build(itemsList);
+
 
         content.Traverse(el =>
         {
             //if (el.Children.Any())
                 Console.WriteLine($"{new string(' ', el.Depth * 4)}FS({el.FontSize}) Page {el.PageNumber} AP {el.AbsolutePosition} Text:\t{el.Text}");
         });
+        */
+
 
     }
 }
