@@ -1,9 +1,5 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Net;
-using Aspose.Pdf;
+﻿using Aspose.Pdf;
 using Aspose.Pdf.Annotations;
-using Aspose.Pdf.Text;
 using Newtonsoft.Json;
 using TryPDFFile;
 

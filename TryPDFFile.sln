@@ -1,6 +1,6 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TryPDFFile", "TryPDFFile\TryPDFFile.csproj", "{68C81DA6-A8E1-47E6-9AE9-275173261D76}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TryPDFFile", "TryPDFFile.csproj", "{073EC765-6A10-43A3-A34A-67A9D190BECB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -8,9 +8,9 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{68C81DA6-A8E1-47E6-9AE9-275173261D76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{68C81DA6-A8E1-47E6-9AE9-275173261D76}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{68C81DA6-A8E1-47E6-9AE9-275173261D76}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{68C81DA6-A8E1-47E6-9AE9-275173261D76}.Release|Any CPU.Build.0 = Release|Any CPU
+		{073EC765-6A10-43A3-A34A-67A9D190BECB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{073EC765-6A10-43A3-A34A-67A9D190BECB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{073EC765-6A10-43A3-A34A-67A9D190BECB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{073EC765-6A10-43A3-A34A-67A9D190BECB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

@@ -1,4 +1,3 @@
-using System.Collections.Generic;
 using Aspose.Pdf;
 using Aspose.Pdf.Text;
 
