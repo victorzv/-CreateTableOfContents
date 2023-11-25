@@ -1,26 +1,26 @@
 namespace TryPDFFile;
 
-public class TableOfContentsNode
+public class Chapter
 {
     public double FontSize { get; set; }
     public int PageNumber { get; set; }
 
     public string Text { get; set; }
     public int AbsolutePosition { get; set; }
-    public List<TableOfContentsNode> Children { get; set; }
+    public List<Chapter> Children { get; set; }
     public int Depth { get; set; } // Добавляем уровень узла.
 
-    public TableOfContentsNode(double fontSize, int pageNumber, int absolutePosition, string text, int depth = 0)
+    public Chapter(double fontSize, int pageNumber, int absolutePosition, string text, int depth = 0)
     {
         FontSize = fontSize;
         PageNumber = pageNumber;
         AbsolutePosition = absolutePosition;
-        Children = new List<TableOfContentsNode>();
+        Children = new List<Chapter>();
         Text = text;
         Depth = depth; // Устанавливаем уровень узла.
     }
 
-    public void AddChild(TableOfContentsNode child)
+    public void AddChild(Chapter child)
     {
         child.Depth = this.Depth + 1; // Устанавливаем уровень дочернего узла.
         //Console.WriteLine($"ADD child to ({FontSize}, {PageNumber}, {VerticalPosition}, {AbsolutePosition}, {Depth})  child ({child.FontSize}, {child.PageNumber}, {child.VerticalPosition}, {child.AbsolutePosition}, {child.Depth}");
@@ -29,7 +29,7 @@ public class TableOfContentsNode
     }
 
     // Реализация метода обхода дерева (пример обхода в глубину).
-    public void Traverse(Action<TableOfContentsNode> action)
+    public void Traverse(Action<Chapter> action)
     {
         action(this);
         foreach (var child in Children)
@@ -38,7 +38,7 @@ public class TableOfContentsNode
         }
     }
     
-    public TableOfContentsNode FindNode(int absolutePosition)
+    public Chapter FindNode(int absolutePosition)
     {
         if (this.AbsolutePosition == absolutePosition)
         {

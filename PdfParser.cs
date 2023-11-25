@@ -3,14 +3,14 @@ using Aspose.Pdf.Text;
 
 namespace TryPDFFile;
 
-public class BuilderPDFSimple : IBuildData
+public class PdfParser : IPdfParser
 {
-    public List<ItemInfo> parseData(string pdfDocPath)
+    public List<IParagraphInfo> parseData(string pdfDocPath)
     {
         //new License().SetLicense("./test.lic");
         Document pdfDoc = new Document(pdfDocPath);
 
-        List<ItemInfo> itemsList = new List<ItemInfo>();
+        List<IParagraphInfo> itemsList = new List<IParagraphInfo>();
         ParagraphAbsorber absorb = new ParagraphAbsorber();
         absorb.Visit(pdfDoc);
         int counter = 1;
@@ -49,7 +49,7 @@ public class BuilderPDFSimple : IBuildData
                     }*/
 
                     //text = text.Substring(0, len);
-                    ItemInfo itemInfo = new ItemInfo()
+                    IParagraphInfo paragraphInfo = new IParagraphInfo()
                     {
                         FontSize = maxFont,
                         Page = pageNumber,
@@ -60,7 +60,7 @@ public class BuilderPDFSimple : IBuildData
                         Left = paragraph.Fragments[0].Position.XIndent
                     };
 
-                    itemsList.Add(itemInfo);
+                    itemsList.Add(paragraphInfo);
                 }
             }
         }

@@ -8,9 +8,9 @@ class Program
     static void Main(string[] args)
     {
         new License().SetLicense(@"./test.lic");
-        List<ItemInfo> itemsList = null;
+        List<IParagraphInfo> itemsList = null;
         
-        IBuildData buildData = new BuilderPDFSimple();
+        IPdfParser pdfParser = new PdfParser();
 
         String pdfFileOutline = "";
         string input = Console.ReadLine();
@@ -27,7 +27,7 @@ class Program
                 return;
             }
             
-            itemsList = buildData.parseData(pdfFile);
+            itemsList = pdfParser.parseData(pdfFile);
             string json = JsonConvert.SerializeObject(itemsList, Formatting.Indented);
             File.WriteAllText(jsonFile, json);
             Console.WriteLine($"File {jsonFile} saved.");
@@ -39,10 +39,10 @@ class Program
             }
             
             pdfFileOutline = pdfFile;
-            itemsList = buildData.parseData(pdfFile);
+            itemsList = pdfParser.parseData(pdfFile);
         }
 
-        List<ItemInfo> levelList = LevelSetup.SetupLevel(itemsList);
+        List<IParagraphInfo> levelList = TableContentHierarchy.SetupLevel(itemsList);
 
         Document pdfDoc = new Document(pdfFileOutline);
             
