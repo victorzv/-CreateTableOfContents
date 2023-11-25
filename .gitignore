@@ -422,3 +422,4 @@ fabric.properties
 /obj/
 /bin/
 /*.lic
+/test.json
