@@ -1,17 +1,16 @@
-using System.Collections.Generic;
 using Aspose.Pdf;
 using Aspose.Pdf.Text;
 
 namespace TryPDFFile;
 
-public class BuilderPDFSimple : IBuildData
+public class PdfParser : IPdfParser
 {
-    public List<ItemInfo> parseData(string pdfDocPath)
+    public List<IParagraphInfo> parseData(string pdfDocPath)
     {
         //new License().SetLicense("./test.lic");
         Document pdfDoc = new Document(pdfDocPath);
 
-        List<ItemInfo> itemsList = new List<ItemInfo>();
+        List<IParagraphInfo> itemsList = new List<IParagraphInfo>();
         ParagraphAbsorber absorb = new ParagraphAbsorber();
         absorb.Visit(pdfDoc);
         int counter = 1;
@@ -40,19 +39,28 @@ public class BuilderPDFSimple : IBuildData
                         }
                     }
 
-                    int len = (paragraph.Text.Length > 10) ? 10 : paragraph.Text.Length;
-                    var text = paragraph.Text;
-                    text = text.Substring(1, len-1);
-                    ItemInfo itemInfo = new ItemInfo()
+                    //int len = (paragraph.Fragments[0].Text.Length > 30) ? 30 : paragraph.Fragments[0].Text.Length;
+                    
+                    var text = paragraph.Fragments[0].Text;
+                    /*
+                    if (len > 1)
+                    {
+                        len--;
+                    }*/
+
+                    //text = text.Substring(0, len);
+                    IParagraphInfo paragraphInfo = new IParagraphInfo()
                     {
                         FontSize = maxFont,
                         Page = pageNumber,
                         Text = text,
                         AbsolutePosition = counter++,
-                        Level = 0
+                        Level = 0,
+                        Top = paragraph.Fragments[0].Position.YIndent,
+                        Left = paragraph.Fragments[0].Position.XIndent
                     };
 
-                    itemsList.Add(itemInfo);
+                    itemsList.Add(paragraphInfo);
                 }
             }
         }

@@ -1,8 +1,8 @@
 namespace TryPDFFile;
 
-public class LevelSetup
+public class TableContentHierarchy
 {
-    public static List<ItemInfo> SetupLevel(List<ItemInfo> list)
+    public static List<IParagraphInfo> SetupLevel(List<IParagraphInfo> list)
     {
         var uniqueFontSizes = list.Select(item => item.FontSize).Distinct().OrderByDescending(size => size).ToList();
 

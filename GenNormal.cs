@@ -1,15 +1,10 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-
 namespace TryPDFFile;
 
-public class GenNormalContent : IBuilderContent
+public class GenNormal : ITableContentBuilder
 {
-    public TableOfContentsNode build(List<ItemInfo> list)
+    public Chapter build(List<IParagraphInfo> list)
     {
-        // фэйковый корень
-        TableOfContentsNode root = new TableOfContentsNode(Int32.MaxValue, -10, -10, "");
+        Chapter root = new Chapter(Int32.MaxValue, -10, -10, "");
         
         var groupedByFontSize = list
             .OrderByDescending(element => element.FontSize)
@@ -19,20 +14,18 @@ public class GenNormalContent : IBuilderContent
         double previousKey = groupedByFontSize.First().Key; 
         var previousElements = groupedByFontSize.First().Value;
         
-        // Добавляем первую группу, как детей в фейковый корень
         foreach (var element in previousElements)
         {
-            //double fontSize, int pageNumber, int absolutePosition, string text, int depth = 0
-            var newNode = new TableOfContentsNode(element.FontSize, element.Page, element.AbsolutePosition, element.Text);
+            var newNode = new Chapter(element.FontSize, element.Page, element.AbsolutePosition, element.Text);
             root.AddChild(newNode);
         }
 
         foreach (var kvp in groupedByFontSize.Skip(1))
         {
             double fontSize = kvp.Key;
-            List<ItemInfo> currentElements = kvp.Value;
+            List<IParagraphInfo> currentElements = kvp.Value;
 
-            TableOfContentsNode previousNode = null; // Создаем предыдущий узел
+            Chapter previousNode = null;
 
             foreach (var element in currentElements)
             {
@@ -48,11 +41,10 @@ public class GenNormalContent : IBuilderContent
                 }
 
                 if (previousNode == null) continue;
-                var newNode = new TableOfContentsNode(element.FontSize, element.Page, element.AbsolutePosition, element.Text);
+                var newNode = new Chapter(element.FontSize, element.Page, element.AbsolutePosition, element.Text);
                 previousNode.AddChild(newNode);
             }
 
-            // Записываем текущую группу как предыдущую для следующей итерации
             previousElements = currentElements;
         }
 
