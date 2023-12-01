@@ -40,6 +40,7 @@ class Program
         }
 
         pdfFileOutline = Path.Combine(Path.GetDirectoryName(pdfFile), "tc_" + Path.GetFileName(pdfFile));
+        File.Copy(pdfFile, pdfFileOutline);
 
         List<ParagraphInfo> levelList = TableContentHierarchy.SetupLevel(itemsList, levels);
 
