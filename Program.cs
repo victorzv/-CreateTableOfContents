@@ -1,14 +1,16 @@
 ﻿using Aspose.Pdf;
 using Aspose.Pdf.Annotations;
 using System.Text.Json;
-using TryPDFFile;
+using TryPDFFile.Model;
+using TryPDFFile.Service;
+using TryPDFFile.Service.Interface;
 
 class Program
 {
     static int Main(string[] args)
     {
         new License().SetLicense(@"./test.lic");
-        List<IParagraphInfo> itemsList;
+        List<ParagraphInfo> itemsList;
 
         IPdfParser pdfParser = new PdfParser();
 
@@ -16,6 +18,8 @@ class Program
 
         Console.WriteLine("Enter pdf file full path:");
         string pdfFile = args.Length == 0 ? Console.ReadLine() : args[0];
+        Console.WriteLine("Levels:");
+        int levels = args.Length == 0 ? int.Parse(Console.ReadLine()) : int.Parse(args[1]);
         if (!File.Exists(pdfFile))
         {
             Console.WriteLine($"File {pdfFile} doesn't exist");
@@ -37,7 +41,7 @@ class Program
 
         pdfFileOutline = Path.Combine(Path.GetDirectoryName(pdfFile), "tc_" + Path.GetFileName(pdfFile));
 
-        List<IParagraphInfo> levelList = TableContentHierarchy.SetupLevel(itemsList);
+        List<ParagraphInfo> levelList = TableContentHierarchy.SetupLevel(itemsList, levels);
 
         Document pdfDoc = new Document(pdfFileOutline);
 
