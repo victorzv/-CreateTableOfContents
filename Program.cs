@@ -1,11 +1,11 @@
 ﻿using Aspose.Pdf;
 using Aspose.Pdf.Annotations;
-using Newtonsoft.Json;
+using System.Text.Json;
 using TryPDFFile;
 
 class Program
 {
-    static void Main(string[] args)
+    static int Main(string[] args)
     {
         new License().SetLicense(@"./test.lic");
         List<IParagraphInfo> itemsList;
@@ -16,27 +16,26 @@ class Program
 
         Console.WriteLine("Enter pdf file full path:");
         string pdfFile = args.Length == 0 ? Console.ReadLine() : args[0];
-        string jsonFile = Path.ChangeExtension(pdfFile, "json");
-
         if (!File.Exists(pdfFile))
         {
-            Console.WriteLine("File doesn't exist");
-            return;
+            Console.WriteLine($"File {pdfFile} doesn't exist");
+            return -1;
         }
 
+        string jsonFile = Path.ChangeExtension(pdfFile, "json");
+
         itemsList = pdfParser.parseData(pdfFile);
-        string json = JsonConvert.SerializeObject(itemsList, Formatting.Indented);
+        string json = JsonSerializer.Serialize(itemsList, new JsonSerializerOptions { WriteIndented = true });
         File.WriteAllText(jsonFile, json);
         Console.WriteLine($"File {jsonFile} saved.");
 
         if (!File.Exists(jsonFile))
         {
-            Console.WriteLine("File doesn't exist");
-            return;
+            Console.WriteLine($"File {jsonFile} doesn't exist");
+            return -1;
         }
 
-        pdfFileOutline = pdfFile;
-        itemsList = pdfParser.parseData(pdfFile);
+        pdfFileOutline = Path.Combine(Path.GetDirectoryName(pdfFile), "tc_" + Path.GetFileName(pdfFile));
 
         List<IParagraphInfo> levelList = TableContentHierarchy.SetupLevel(itemsList);
 
@@ -60,6 +59,7 @@ class Program
             Console.WriteLine($"{new string(' ', item.Level * 4)} FS({item.FontSize}) Page ({item.Page}) Text: {item.Text} AP {item.AbsolutePosition}");
         }
 
+        return 0;
         /*
         IBuilderContent normalContent = new GenNormalContent();
 
