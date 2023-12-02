@@ -1,5 +1,6 @@
 ﻿using Aspose.Pdf;
 using Aspose.Pdf.Annotations;
+using PdfOutliner.Service;
 using System.Text.Json;
 using TryPDFFile.Model;
 using TryPDFFile.Service;
@@ -44,21 +45,7 @@ class Program
 
         List<ParagraphInfo> levelList = new FontSizeFilter().Reduce(itemsList, levels);
 
-        Document pdfDoc = new Document(pdfFileOutline);
-
-        foreach (var item in levelList)
-        {
-            OutlineItemCollection outlineItemCollection = new OutlineItemCollection(pdfDoc.Outlines);
-            outlineItemCollection.Title = item.Text;
-            outlineItemCollection.Italic = true;
-            outlineItemCollection.Action =
-                new GoToAction(new XYZExplicitDestination(pdfDoc, item.Page, item.Left, item.Top, 1));
-
-            pdfDoc.Outlines.Add(outlineItemCollection);
-
-        }
-
-        pdfDoc.Save(pdfFileOutline);
+        new OutlineBuilder().CreateOutlineHierarchy(pdfFileOutline, levelList);
         foreach (var item in levelList)
         {
             Console.WriteLine($"{new string(' ', item.Level * 4)} FS({item.FontSize}) Page ({item.Page}) Text: {item.Text} AP {item.AbsolutePosition}");
