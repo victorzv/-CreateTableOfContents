@@ -9,10 +9,10 @@ public class PdfParser : IPdfParser
 {
     public List<ParagraphInfo> parseData(string pdfDocPath)
     {
-        Document pdfDoc = new Document(pdfDocPath);
+        var pdfDoc = new Document(pdfDocPath);
 
-        List<ParagraphInfo> itemsList = new List<ParagraphInfo>();
-        ParagraphAbsorber absorb = new ParagraphAbsorber();
+        var itemsList = new List<ParagraphInfo>();
+        var absorb = new ParagraphAbsorber();
         absorb.Visit(pdfDoc);
         int counter = 1;
         foreach (PageMarkup markup in absorb.PageMarkups)
@@ -40,19 +40,11 @@ public class PdfParser : IPdfParser
                         }
                     }
 
-                    //int len = (paragraph.Fragments[0].Text.Length > 30) ? 30 : paragraph.Fragments[0].Text.Length;
-
-                    var text = paragraph.Fragments[0].Text;
-                    /*
-                    if (len > 1)
-                    {
-                        len--;
-                    }*/
-
-                    //text = text.Substring(0, len);
+                    var text = paragraph.Text;
+                    
                     ParagraphInfo paragraphInfo = new ParagraphInfo()
                     {
-                        FontSize = maxFont,
+                        FontSize = text.Length < 127 ? maxFont : 1,
                         Page = pageNumber,
                         Text = text,
                         AbsolutePosition = counter++,

@@ -42,7 +42,7 @@ class Program
         pdfFileOutline = Path.Combine(Path.GetDirectoryName(pdfFile), "tc_" + Path.GetFileName(pdfFile));
         File.Copy(pdfFile, pdfFileOutline);
 
-        List<ParagraphInfo> levelList = TableContentHierarchy.SetupLevel(itemsList, levels);
+        List<ParagraphInfo> levelList = new FontSizeFilter().Reduce(itemsList, levels);
 
         Document pdfDoc = new Document(pdfFileOutline);
 

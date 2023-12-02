@@ -44,13 +44,17 @@ public class GenNormal : ITableContentBuilder
                 }
 
                 if (previousNode == null) continue;
-                var newNode = new Chapter(element.FontSize, element.Page, element.AbsolutePosition, element.Text);
+
+                var newNode = new Chapter(
+                    element.FontSize, 
+                    element.Page, 
+                    element.AbsolutePosition, element.Text);
+
                 previousNode.AddChild(newNode);
             }
 
             previousElements = currentElements;
         }
-
 
         return root;
     }

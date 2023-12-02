@@ -27,7 +27,6 @@ public class Chapter
     public void AddChild(Chapter child)
     {
         child.Depth = Depth + 1;
-        //Console.WriteLine($"ADD child to ({FontSize}, {PageNumber}, {VerticalPosition}, {AbsolutePosition}, {Depth})  child ({child.FontSize}, {child.PageNumber}, {child.VerticalPosition}, {child.AbsolutePosition}, {child.Depth}");
         Children.Add(child);
         Children = Children.OrderBy(c => c.AbsolutePosition).ToList();
     }
