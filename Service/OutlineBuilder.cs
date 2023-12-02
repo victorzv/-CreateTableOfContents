@@ -7,9 +7,8 @@ namespace PdfOutliner.Service
 {
     public class OutlineBuilder
     {
-        public void CreateOutlineHierarchy(string pdfFile, List<ParagraphInfo> levelList)
+        public void CreateOutlineHierarchy(string pdfFile, List<OutlineItem> o)
         {
-            var o = new HierarchyBuilder().Build(levelList);
             var pdfDoc = new Document(pdfFile);
             AddOutlinesToPdf(pdfDoc, o);
             pdfDoc.Save(pdfFile);

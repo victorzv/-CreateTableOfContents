@@ -1,5 +1,6 @@
 ﻿using Aspose.Pdf;
 using Aspose.Pdf.Annotations;
+using PdfOutliner.Model;
 using PdfOutliner.Service;
 using System.Text.Json;
 using TryPDFFile.Model;
@@ -30,22 +31,19 @@ class Program
         string jsonFile = Path.ChangeExtension(pdfFile, "json");
 
         itemsList = pdfParser.parseData(pdfFile);
-        string json = JsonSerializer.Serialize(itemsList, new JsonSerializerOptions { WriteIndented = true });
-        File.WriteAllText(jsonFile, json);
-        Console.WriteLine($"File {jsonFile} saved.");
-
-        if (!File.Exists(jsonFile))
-        {
-            Console.WriteLine($"File {jsonFile} doesn't exist");
-            return -1;
-        }
-
+        
         pdfFileOutline = Path.Combine(Path.GetDirectoryName(pdfFile), "tc_" + Path.GetFileName(pdfFile));
         File.Copy(pdfFile, pdfFileOutline);
 
         List<ParagraphInfo> levelList = new FontSizeFilter().Reduce(itemsList, levels);
 
-        new OutlineBuilder().CreateOutlineHierarchy(pdfFileOutline, levelList);
+        
+        List<OutlineItem> hierarchy = new HierarchyBuilder().Build(levelList);
+        string json = JsonSerializer.Serialize(hierarchy, new JsonSerializerOptions { WriteIndented = true });
+        File.WriteAllText(jsonFile, json);
+        Console.WriteLine($"File {jsonFile} saved.");
+
+        new OutlineBuilder().CreateOutlineHierarchy(pdfFileOutline, hierarchy);
         foreach (var item in levelList)
         {
             Console.WriteLine($"{new string(' ', item.Level * 4)} FS({item.FontSize}) Page ({item.Page}) Text: {item.Text} AP {item.AbsolutePosition}");
