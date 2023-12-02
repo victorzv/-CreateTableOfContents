@@ -1,0 +1,139 @@
+[
+  {
+    "Text": "LLMs cannot find reasoning errors, but can correct them!",
+    "Page": 1,
+    "Level": 1,
+    "Top": 764.9214641904831,
+    "Left": 121.806,
+    "AbsolutePosition": 1,
+    "Children": [
+      {
+        "Text": "2Google Research\r\ngladys.tyen@cl.cam.ac.uk\r\n{hassan,chenfeif,tonymak,vcarbune}@google.com",
+        "Page": 1,
+        "Level": 2,
+        "Top": 703.2375683345794,
+        "Left": 255.89100000000002,
+        "AbsolutePosition": 3,
+        "Children": []
+      },
+      {
+        "Text": "Abstract",
+        "Page": 1,
+        "Level": 2,
+        "Top": 628.9840833740235,
+        "Left": 157.758,
+        "AbsolutePosition": 4,
+        "Children": []
+      },
+      {
+        "Text": "1 Introduction",
+        "Page": 1,
+        "Level": 2,
+        "Top": 326.42108337402345,
+        "Left": 70.86600000000001,
+        "AbsolutePosition": 6,
+        "Children": []
+      }
+    ]
+  },
+  {
+    "Text": "arXiv:2311.08516v1  [cs.AI]  14 Nov 2023",
+    "Page": 1,
+    "Level": 0,
+    "Top": 578.6199999999999,
+    "Left": 32,
+    "AbsolutePosition": 7,
+    "Children": [
+      {
+        "Text": "2 BIG-Bench Mistake",
+        "Page": 2,
+        "Level": 2,
+        "Top": 362.06108337402344,
+        "Left": 70.866,
+        "AbsolutePosition": 35,
+        "Children": []
+      },
+      {
+        "Text": "3 Benchmark results",
+        "Page": 3,
+        "Level": 2,
+        "Top": 607.8520833740234,
+        "Left": 306.142,
+        "AbsolutePosition": 46,
+        "Children": []
+      },
+      {
+        "Text": "4 Backtracking",
+        "Page": 5,
+        "Level": 2,
+        "Top": 225.92608337402342,
+        "Left": 306.14199999999994,
+        "AbsolutePosition": 129,
+        "Children": []
+      },
+      {
+        "Text": "5 Related work",
+        "Page": 8,
+        "Level": 2,
+        "Top": 622.4700833740235,
+        "Left": 306.142,
+        "AbsolutePosition": 171,
+        "Children": []
+      },
+      {
+        "Text": "6 Conclusion",
+        "Page": 8,
+        "Level": 2,
+        "Top": 144.4870833740234,
+        "Left": 306.142,
+        "AbsolutePosition": 177,
+        "Children": []
+      },
+      {
+        "Text": "Limitations",
+        "Page": 9,
+        "Level": 2,
+        "Top": 679.9280833740235,
+        "Left": 70.866,
+        "AbsolutePosition": 191,
+        "Children": []
+      },
+      {
+        "Text": "References",
+        "Page": 9,
+        "Level": 2,
+        "Top": 461.34508337402343,
+        "Left": 70.866,
+        "AbsolutePosition": 202,
+        "Children": []
+      },
+      {
+        "Text": "A Implementational details",
+        "Page": 10,
+        "Level": 2,
+        "Top": 634.1370833740234,
+        "Left": 70.86600000000001,
+        "AbsolutePosition": 225,
+        "Children": []
+      },
+      {
+        "Text": "B Annotation",
+        "Page": 10,
+        "Level": 2,
+        "Top": 476.7520833740234,
+        "Left": 306.142,
+        "AbsolutePosition": 230,
+        "Children": []
+      },
+      {
+        "Text": "C Benchmark scores",
+        "Page": 10,
+        "Level": 2,
+        "Top": 174.63908337402341,
+        "Left": 306.142,
+        "AbsolutePosition": 241,
+        "Children": []
+      }
+    ]
+  }
+]

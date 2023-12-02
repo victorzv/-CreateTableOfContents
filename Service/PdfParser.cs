@@ -49,7 +49,7 @@ public class PdfParser : IPdfParser
                         Text = text,
                         AbsolutePosition = counter++,
                         Level = 0,
-                        Top = paragraph.Fragments[0].Position.YIndent,
+                        Top = paragraph.Fragments[0].Position.YIndent + paragraph.Fragments[0].Rectangle.Height,
                         Left = paragraph.Fragments[0].Position.XIndent
                     };
 

@@ -32,7 +32,7 @@ namespace PdfOutliner.Service
             outlineItemCollection.Title = item.Text;
             outlineItemCollection.Italic = true;
             outlineItemCollection.Action =
-                new GoToAction(new XYZExplicitDestination(pdfDocument, item.Page, item.Left, item.Top, 1));
+                new GoToAction(new XYZExplicitDestination(item.Page, item.Left, item.Top, 1));
 
             if (parent != null)
                 parent.Add(outlineItemCollection);
