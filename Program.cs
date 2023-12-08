@@ -1,5 +1,4 @@
 ﻿using Aspose.Pdf;
-using Aspose.Pdf.Annotations;
 using PdfOutliner.Model;
 using PdfOutliner.Service;
 using System.Text.Json;
